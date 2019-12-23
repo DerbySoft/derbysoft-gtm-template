@@ -1,0 +1,5 @@
+homepage: "https://www.derbysoft.com/",
+documentation: "https://github.com/joeyou2020/derbysoft-gtm-template",
+versions:
+  - sha: bf60b3a6d6116e994d1e5ca33c07400c7d762102125c736e2ca6df909ac1cd08
+    changeNotes: First Version
