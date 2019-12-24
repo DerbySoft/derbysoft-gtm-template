@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/joeyou2020/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 7fc1658ac5a614e030edbd460a9dfb5aa4bf794c
+    changeNotes: use prod js
   - sha: 36d4c2e96aa71e7fbb8038f87628e8ad9a6b49e2
     changeNotes: fix template
   - sha: adf064886a1971945493749f546d60142be24cb1
