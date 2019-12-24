@@ -218,12 +218,9 @@ const _bparams = {
 };
 
 setInWindow("_bparams", _bparams, true);
-log('data: ', _bparams);
+log('data = ', _bparams);
 
-//const jsfile = "https://10.200.0.95/pixel/pixel.min_src.js";
-const jsfile = "https://10.200.0.95/pixel/pixel.all.js";
-//const jsfile = "https://linkcenterus.derbysoftsec.com/pixel/v1/pixel.js";
-
+const jsfile = "https://linkcenterus.derbysoftsec.com/pixel/v1/pixel.js";
 injectScript(jsfile, data.gtmOnSuccess, data.gtmOnFailure, 'derbyPixel');
 
 
@@ -262,7 +259,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://10.200.0.95/pixel/pixel.all.js"
+                "string": "https://linkcenterus.derbysoftsec.com/pixel/v1/pixel.js"
               }
             ]
           }
@@ -341,7 +338,23 @@ ___WEB_PERMISSIONS___
         "publicId": "send_pixel",
         "versionId": "1"
       },
-      "param": []
+      "param": [
+        {
+          "key": "urls",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "https://linkcenterus.derbysoftca.com/"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
     },
     "isRequired": true
   }
@@ -355,6 +368,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 2019/12/24 下午2:54:25
+Created on 2019/12/24 下午3:29:31
 
 
