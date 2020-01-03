@@ -68,13 +68,13 @@ ___TEMPLATE_PARAMETERS___
   {
     "type": "TEXT",
     "name": "check_in_date",
-    "displayName": "Check In Date",
+    "displayName": "Check In Date (yyyy-mm-dd)",
     "simpleValueType": true
   },
   {
     "type": "TEXT",
     "name": "check_out_date",
-    "displayName": "Check Out Date",
+    "displayName": "Check Out Date (yyyy-mm-dd)",
     "simpleValueType": true
   },
   {
@@ -185,7 +185,6 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const log = require('logToConsole');
-const sendPixel = require('sendPixel');
 const setInWindow = require('setInWindow');
 const injectScript = require('injectScript');
 
@@ -331,32 +330,6 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "send_pixel",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "urls",
-          "value": {
-            "type": 2,
-            "listItem": [
-              {
-                "type": 1,
-                "string": "https://linkcenterus.derbysoftca.com/"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
   }
 ]
 
@@ -368,6 +341,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 2019/12/24 下午3:29:31
+Created on 2020/1/3 下午3:28:05
 
 
