@@ -401,18 +401,22 @@ if (hotel_id)      { pixelUrl += '&hotel_id='+encodeUriComponent(makeString(hote
 if (booking_id)    { pixelUrl += '&booking_id='+encodeUriComponent(makeString(booking_id)); }
 if (check_in_date)  { pixelUrl += '&check_in_date='+encodeUriComponent(makeString(check_in_date)); }
 if (check_out_date) { pixelUrl += '&check_out_date='+encodeUriComponent(makeString(check_out_date)); }
-if (stay_length)   { pixelUrl += '&stay_length='+encodeUriComponent(makeString(stay_length)); }
-if (total_guests)  { pixelUrl += '&total_guests='+encodeUriComponent(makeString(total_guests)); }
-if (rooms)       { pixelUrl += '&rooms='+encodeUriComponent(makeString(rooms)); }
-if (adults)      { pixelUrl += '&adults='+encodeUriComponent(makeString(adults)); }
-if (children)     { pixelUrl += '&children='+encodeUriComponent(makeString(children)); }
+
+pixelUrl += '&stay_length='+encodeUriComponent(makeString(stay_length));
+pixelUrl += '&total_guests='+encodeUriComponent(makeString(total_guests));
+pixelUrl += '&rooms='+encodeUriComponent(makeString(rooms));
+pixelUrl += '&adults='+encodeUriComponent(makeString(adults));
+pixelUrl += '&children='+encodeUriComponent(makeString(children));
+
 if (room_type_id)  { pixelUrl += '&room_type_id='+encodeUriComponent(makeString(room_type_id)); }
 if (room_type_name) { pixelUrl += '&room_type='+encodeUriComponent(makeString(room_type_name)); }
 if (rate_plan_id)  { pixelUrl += '&rate_plan_id='+encodeUriComponent(makeString(rate_plan_id)); }
 if (rate_plan_name) { pixelUrl += '&rate_plan_name='+encodeUriComponent(makeString(rate_plan_name)); }
-if (price_base)   { pixelUrl += '&price_base='+encodeUriComponent(makeString(price_base)); }
-if (price_tax_fees) { pixelUrl += '&price_tax_fees='+encodeUriComponent(makeString(price_tax_fees)); }
-if (price_total)   { pixelUrl += '&price_total='+encodeUriComponent(makeString(price_total)); }
+
+pixelUrl += '&price_base='+encodeUriComponent(makeString(price_base));
+pixelUrl += '&price_tax_fees='+encodeUriComponent(makeString(price_tax_fees));
+pixelUrl += '&price_total='+encodeUriComponent(makeString(price_total));
+
 if (price_displayed_type) { pixelUrl += '&price_displayed_type='+encodeUriComponent(makeString(price_displayed_type)); }
 if (price_currency) { pixelUrl += '&price_currency='+encodeUriComponent(makeString(price_currency)); }
 if (hotel_country) { pixelUrl += '&hotel_country='+encodeUriComponent(makeString(hotel_country)); }
@@ -476,34 +480,30 @@ ___WEB_PERMISSIONS___
 ___TESTS___
 
 scenarios:
-- name: send test
+- name: booking_complete test
   code: |-
     const mockData = {
-      // Mocked field values
       "pixel_id":"10001",
       "account_id":"testv3",
       "event_type":"booking_complete",
       "is_landing_page":"FALSE",
-      "hotel_id":"1",
-      "booking_id":"2",
-      "check_in_date":"2019-12-27",
-      "check_out_date":"2019-12-28",
-      "stay_length":"3",
-      "total_guests":"4",
-      "rooms":"5",
-      "adults":"6",
-      "room_type_id":"7",
-      "room_type_name":"8",
-      "rate_plan_id":"9",
-      "rate_plan_name":"10",
-      "price_base":"11",
-      "price_tax_fees":"12",
-      "price_total":"13",
-      "price_currency":"USD",
-      "price_total_currency":"USD",
-      "hotel_country":"14",
-      "hotel_region":"15",
-      "hotel_city":"16",
+      "hotel_id": "testhotel",
+      "booking_id": "10000000001",
+      "check_in_date": "2020-02-01",
+      "check_out_date": "2020-02-02",
+      "stay_length": 1,
+      "total_guests": 2,
+      "rooms": 1,
+      "adults": 2,
+      "children": 0,
+      "room_type_id": "room_id",
+      "room_type_name": "room_name",
+      "rate_plan_id": "rate_id",
+      "rate_plan_name": "rate_name",
+      "price_base": 200,
+      "price_tax_fees": 20,
+      "price_total": 220,
+      "price_currency": "USD",
       "gtm":"yes"
     };
 
@@ -511,7 +511,7 @@ scenarios:
     runCode(mockData);
 
     // Verify that the tag finished successfully.
-    assertApi('gtmOnSuccess').wasCalled();
+    assertApi('sendPixel').wasCalled();
 
 
 ___NOTES___
