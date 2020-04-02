@@ -413,9 +413,11 @@ if (room_type_name) { pixelUrl += '&room_type='+encodeUriComponent(makeString(ro
 if (rate_plan_id)  { pixelUrl += '&rate_plan_id='+encodeUriComponent(makeString(rate_plan_id)); }
 if (rate_plan_name) { pixelUrl += '&rate_plan_name='+encodeUriComponent(makeString(rate_plan_name)); }
 
+if (event_type=='booking_details' || event_type=='booking_complete') {
 pixelUrl += '&price_base='+encodeUriComponent(makeString(price_base));
 pixelUrl += '&price_tax_fees='+encodeUriComponent(makeString(price_tax_fees));
 pixelUrl += '&price_total='+encodeUriComponent(makeString(price_total));
+}
 
 if (price_displayed_type) { pixelUrl += '&price_displayed_type='+encodeUriComponent(makeString(price_displayed_type)); }
 if (price_currency) { pixelUrl += '&price_currency='+encodeUriComponent(makeString(price_currency)); }
