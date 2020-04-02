@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 34d1c99bab21210549722d667b8f73a97a739fe0
+    changeNotes: check undefined value
   - sha: 785ecfc038a9104b224bc2916ebf2d2648eb9ed7
     changeNotes: fix zero value and test
   - sha: 4fb3e3a4c77bdf030fd7f2ac21e3e4adbb798b04
