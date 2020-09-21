@@ -365,6 +365,7 @@ const log = require('logToConsole');
 const encodeUriComponent = require('encodeUriComponent');
 const makeString = require('makeString');
 const sendPixel = require('sendPixel');
+const query = require('queryPermission');
 
 const pixel_id = data.pixel_id;
 const account_id = data.account_id;
@@ -426,7 +427,9 @@ if (hotel_region)  { pixelUrl += '&hotel_region='+encodeUriComponent(makeString(
 if (hotel_city)   { pixelUrl += '&hotel_city='+encodeUriComponent(makeString(hotel_city)); }
 pixelUrl += '&gtm=yes';
 
-sendPixel(pixelUrl,data.gtmOnSuccess,data.gtmOnFailure);
+if (query('send_pixel', pixelUrl)) {
+  sendPixel(pixelUrl,data.gtmOnSuccess,data.gtmOnFailure);
+}
 
 
 ___WEB_PERMISSIONS___
@@ -457,6 +460,13 @@ ___WEB_PERMISSIONS___
         "versionId": "1"
       },
       "param": [
+        {
+          "key": "allowedUrls",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
         {
           "key": "urls",
           "value": {
