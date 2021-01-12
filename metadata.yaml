@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: b74d3f9f5181771eab0a01906498f6e48e517d45
+    changeNotes: add custom field
   - sha: 741b1a8dd788ed1667b13c717323f63bdb0951d9
     changeNotes: fix queryPermission
   - sha: 34d1c99bab21210549722d667b8f73a97a739fe0
