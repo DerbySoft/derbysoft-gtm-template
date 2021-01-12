@@ -355,6 +355,39 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
+  },
+  {
+    "type": "GROUP",
+    "name": "custom",
+    "displayName": "Custom Details",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "TEXT",
+        "name": "custom_1",
+        "displayName": "Custom value 1",
+        "simpleValueType": true
+      },
+      {
+        "type": "TEXT",
+        "name": "custom_2",
+        "displayName": "Custom value 2",
+        "simpleValueType": true
+      },
+      {
+        "type": "TEXT",
+        "name": "custom_3",
+        "displayName": "Custom value 3",
+        "simpleValueType": true
+      }
+    ],
+    "enablingConditions": [
+      {
+        "paramName": "event_type",
+        "paramValue": "booking_complete",
+        "type": "EQUALS"
+      }
+    ]
   }
 ]
 
@@ -392,6 +425,9 @@ const price_currency = data.price_currency;
 const hotel_country = data.hotel_country;
 const hotel_region = data.hotel_region;
 const hotel_city = data.hotel_city;
+const custom_1 = data.custom_1;
+const custom_2 = data.custom_2;
+const custom_3 = data.custom_3;
 
 var pixelUrl = 'https://linkcenterus.derbysoftca.com/dplatform-linkcenter/pixelTagging?pixel_id='+encodeUriComponent(makeString(pixel_id))+'&account_id='+encodeUriComponent(makeString(account_id))+'&event_type='+encodeUriComponent(makeString(event_type));
 
@@ -425,6 +461,11 @@ if (price_currency) { pixelUrl += '&price_currency='+encodeUriComponent(makeStri
 if (hotel_country) { pixelUrl += '&hotel_country='+encodeUriComponent(makeString(hotel_country)); }
 if (hotel_region)  { pixelUrl += '&hotel_region='+encodeUriComponent(makeString(hotel_region)); }
 if (hotel_city)   { pixelUrl += '&hotel_city='+encodeUriComponent(makeString(hotel_city)); }
+
+if (custom_1)   { pixelUrl += '&custom_1='+encodeUriComponent(makeString(custom_1)); }
+if (custom_2)   { pixelUrl += '&custom_2='+encodeUriComponent(makeString(custom_2)); }
+if (custom_3)   { pixelUrl += '&custom_3='+encodeUriComponent(makeString(custom_3)); }
+
 pixelUrl += '&gtm=yes';
 
 if (query('send_pixel', pixelUrl)) {
@@ -516,6 +557,7 @@ scenarios:
       "price_tax_fees": 20,
       "price_total": 220,
       "price_currency": "USD",
+      "custom_1": "abc",
       "gtm":"yes"
     };
 
