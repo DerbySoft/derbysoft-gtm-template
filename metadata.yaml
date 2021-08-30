@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 6c32293468aca327d834a74bd64997f67927248a
+    changeNotes: allow pass price info when rate selection
   - sha: b74d3f9f5181771eab0a01906498f6e48e517d45
     changeNotes: add custom field
   - sha: 741b1a8dd788ed1667b13c717323f63bdb0951d9
