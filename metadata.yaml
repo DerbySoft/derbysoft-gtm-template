@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 44a6a870d076cac98c85d18d8fb0996d4da31a36
+    changeNotes: update README.md
   - sha: 8583d01d252a6067616e6916f983488744a4b0c7
     changeNotes: allow pass price info when room selection
   - sha: a242fe14aa5b037aa91828f79e099827604aefb3
