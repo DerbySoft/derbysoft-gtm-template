@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: e9f0787cf567266e5b323c56a82ad167b452312c
+    changeNotes: allow pass price info when is landing page
   - sha: 44a6a870d076cac98c85d18d8fb0996d4da31a36
     changeNotes: update README.md
   - sha: 8583d01d252a6067616e6916f983488744a4b0c7
