@@ -1,4 +1,12 @@
-﻿___INFO___
+﻿___TERMS_OF_SERVICE___
+
+By creating or modifying this file you agree to Google Tag Manager's Community
+Template Gallery Developer Terms of Service available at
+https://developers.google.com/tag-manager/gallery-tos (or such other URL as
+Google may provide), as modified from time to time.
+
+
+___INFO___
 
 {
   "type": "TAG",
@@ -364,6 +372,11 @@ ___TEMPLATE_PARAMETERS___
       {
         "paramName": "event_type",
         "paramValue": "room_selection",
+        "type": "EQUALS"
+      },
+      {
+        "paramName": "is_landing_page",
+        "paramValue": true,
         "type": "EQUALS"
       }
     ]
