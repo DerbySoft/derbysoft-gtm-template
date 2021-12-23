@@ -424,6 +424,10 @@ const encodeUriComponent = require('encodeUriComponent');
 const makeString = require('makeString');
 const sendPixel = require('sendPixel');
 const query = require('queryPermission');
+const getUrl = require('getUrl');
+const setCookie = require('setCookie');
+const parseUrl = require('parseUrl');
+const getCookieValues = require('getCookieValues');
 
 const pixel_id = data.pixel_id;
 const account_id = data.account_id;
@@ -456,8 +460,34 @@ const custom_3 = data.custom_3;
 
 var pixelUrl = 'https://linkcenterus.derbysoftca.com/dplatform-linkcenter/pixelTagging?pixel_id='+encodeUriComponent(makeString(pixel_id))+'&account_id='+encodeUriComponent(makeString(account_id))+'&event_type='+encodeUriComponent(makeString(event_type));
 
-if (is_landing_page) { pixelUrl += '&is_landing_page='+encodeUriComponent(makeString(is_landing_page)); } 
-else            { pixelUrl += '&is_landing_page=FALSE'; }
+log('is_landing_page = ' + is_landing_page);
+if (is_landing_page) {
+
+  pixelUrl += '&is_landing_page='+encodeUriComponent(makeString(is_landing_page)); 
+
+  if (makeString(is_landing_page).toLowerCase() == 'true') {
+    log('set cookie start');
+
+    // set cookie 
+    const urlObject = parseUrl(getUrl());
+    log('dsclid = ' + urlObject.searchParams.dsclid);
+    if ( urlObject.searchParams.dsclid != undefined && urlObject.searchParams.dsclid != '' ) {
+      const options = {
+        'domain': getUrl('host'),
+        'path': '/',
+        'max-age': 30 * 24 * 60 * 60 * 1000
+      };
+      log('set cookie permission = ' + query('set_cookies', 'dsclid', options));
+      if (query('set_cookies', 'dsclid', options)) {
+        setCookie('dsclid', urlObject.searchParams.dsclid, options);
+      }
+    }
+    log('set cookie end');
+  }
+} 
+else {
+  pixelUrl += '&is_landing_page=FALSE'; 
+}
 
 if (hotel_id)      { pixelUrl += '&hotel_id='+encodeUriComponent(makeString(hotel_id)); }
 if (booking_id)    { pixelUrl += '&booking_id='+encodeUriComponent(makeString(booking_id)); }
@@ -491,6 +521,12 @@ if (custom_1)   { pixelUrl += '&custom_1='+encodeUriComponent(makeString(custom_
 if (custom_2)   { pixelUrl += '&custom_2='+encodeUriComponent(makeString(custom_2)); }
 if (custom_3)   { pixelUrl += '&custom_3='+encodeUriComponent(makeString(custom_3)); }
 
+if (event_type.toLowerCase() == 'booking_complete') {
+  if (query('get_cookies', 'dsclid')) {
+    pixelUrl += '&dsclid=' + getCookieValues('dsclid');
+  }
+}
+
 pixelUrl += '&gtm=yes';
 
 if (query('send_pixel', pixelUrl)) {
@@ -517,6 +553,9 @@ ___WEB_PERMISSIONS___
         }
       ]
     },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
     "isRequired": true
   },
   {
@@ -541,6 +580,136 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://linkcenterus.derbysoftca.com/"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_url",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "urlParts",
+          "value": {
+            "type": 1,
+            "string": "any"
+          }
+        },
+        {
+          "key": "queriesAllowed",
+          "value": {
+            "type": 1,
+            "string": "any"
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "set_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "allowedCookies",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "dsclid"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
+          "key": "cookieNames",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "dsclid"
               }
             ]
           }
