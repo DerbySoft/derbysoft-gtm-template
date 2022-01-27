@@ -2,7 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
-  
+  - sha: 75495c9061ec816d9da28019d0df6316b0b2b318
+    changeNotes: change the way to fetch dsclid from URL
   - sha: 0b26075efdf39933ab18191fb4d9eb0b8c1bb79a
     changeNotes: support landing page pxiel
   - sha: e9f0787cf567266e5b323c56a82ad167b452312c
