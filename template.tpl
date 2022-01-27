@@ -413,6 +413,19 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
+  },
+  {
+    "type": "TEXT",
+    "name": "dsclid",
+    "displayName": "DS Click ID",
+    "simpleValueType": true,
+    "enablingConditions": [
+      {
+        "paramName": "is_landing_page",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
   }
 ]
 
@@ -457,6 +470,7 @@ const hotel_city = data.hotel_city;
 const custom_1 = data.custom_1;
 const custom_2 = data.custom_2;
 const custom_3 = data.custom_3;
+const dsclid = data.dsclid;
 
 var pixelUrl = 'https://linkcenterus.derbysoftca.com/dplatform-linkcenter/pixelTagging?pixel_id='+encodeUriComponent(makeString(pixel_id))+'&account_id='+encodeUriComponent(makeString(account_id))+'&event_type='+encodeUriComponent(makeString(event_type));
 
@@ -466,12 +480,10 @@ if (is_landing_page) {
   pixelUrl += '&is_landing_page='+encodeUriComponent(makeString(is_landing_page)); 
 
   if (makeString(is_landing_page).toLowerCase() == 'true') {
-    log('set cookie start');
+    log('set cookie start, dsclid = ' + dsclid);
 
     // set cookie 
-    const urlObject = parseUrl(getUrl());
-    log('dsclid = ' + urlObject.searchParams.dsclid);
-    if ( urlObject.searchParams.dsclid != undefined && urlObject.searchParams.dsclid != '' ) {
+    if ( dsclid != undefined && dsclid != '' ) {
       const options = {
         'domain': getUrl('host'),
         'path': '/',
@@ -479,7 +491,8 @@ if (is_landing_page) {
       };
       log('set cookie permission = ' + query('set_cookies', 'dsclid', options));
       if (query('set_cookies', 'dsclid', options)) {
-        setCookie('dsclid', urlObject.searchParams.dsclid, options);
+        setCookie('dsclid', dsclid, options);
+        log('set cookie successfully.');
       }
     }
     log('set cookie end');
