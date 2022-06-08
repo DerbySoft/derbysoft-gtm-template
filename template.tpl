@@ -487,7 +487,7 @@ if (is_landing_page) {
       const options = {
         'domain': getUrl('host'),
         'path': '/',
-        'max-age': 30 * 24 * 60 * 60 * 1000
+        'max-age': 30 * 24 * 60 * 60
       };
       log('set cookie permission = ' + query('set_cookies', 'dsclid', options));
       if (query('set_cookies', 'dsclid', options)) {
