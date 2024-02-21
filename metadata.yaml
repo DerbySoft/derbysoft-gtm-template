@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 6472b149df8283269043a0c3bdb7998a247c3ae7
+    changeNotes: add 3 new parameters
   - sha: 34247e71f70a929f2427c5378d05bfd7164ef6c6
     changeNotes: fix cookie expire time
   - sha: 5ae90dbfa54f65510724686690c7868c0a5a2e4a
