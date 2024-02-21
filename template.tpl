@@ -426,6 +426,45 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
+  },
+  {
+    "type": "TEXT",
+    "name": "gclid",
+    "displayName": "Google Click ID",
+    "simpleValueType": true,
+    "enablingConditions": [
+      {
+        "paramName": "is_landing_page",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
+    "type": "TEXT",
+    "name": "campaign_id",
+    "displayName": "Google campaign Id",
+    "simpleValueType": true,
+    "enablingConditions": [
+      {
+        "paramName": "is_landing_page",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
+    "type": "TEXT",
+    "name": "ads_type",
+    "displayName": "Ads Type (PPC | PMAX)",
+    "simpleValueType": true,
+    "enablingConditions": [
+      {
+        "paramName": "is_landing_page",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
   }
 ]
 
@@ -471,6 +510,10 @@ const custom_1 = data.custom_1;
 const custom_2 = data.custom_2;
 const custom_3 = data.custom_3;
 const dsclid = data.dsclid;
+const gclid = data.gclid;
+const campaign_id = data.campaign_id;
+const ads_type = data.ads_type;
+
 
 var pixelUrl = 'https://linkcenterus.derbysoftca.com/dplatform-linkcenter/pixelTagging?pixel_id='+encodeUriComponent(makeString(pixel_id))+'&account_id='+encodeUriComponent(makeString(account_id))+'&event_type='+encodeUriComponent(makeString(event_type));
 
@@ -483,18 +526,43 @@ if (is_landing_page) {
     log('set cookie start, dsclid = ' + dsclid);
 
     // set cookie 
+    const options = {
+      'domain': getUrl('host'),
+      'path': '/',
+      'max-age': 30 * 24 * 60 * 60
+    };
     if ( dsclid != undefined && dsclid != '' ) {
-      const options = {
-        'domain': getUrl('host'),
-        'path': '/',
-        'max-age': 30 * 24 * 60 * 60
-      };
       log('set cookie permission = ' + query('set_cookies', 'dsclid', options));
       if (query('set_cookies', 'dsclid', options)) {
         setCookie('dsclid', dsclid, options);
-        log('set cookie successfully.');
+        log('set dsclid cookie successfully.');
       }
     }
+    
+    if ( gclid != undefined && gclid != '' ) {
+      log('set cookie permission = ' + query('set_cookies', 'ds_gclid', options));
+      if (query('set_cookies', 'ds_gclid', options)) {
+        setCookie('ds_gclid', gclid, options);
+        log('set ds_gclid cookie successfully.');
+      }
+    }
+    
+    if ( campaign_id != undefined && campaign_id != '' ) {
+      log('set cookie permission = ' + query('set_cookies', 'campaign_id', options));
+      if (query('set_cookies', 'campaign_id', options)) {
+        setCookie('campaign_id', campaign_id, options);
+        log('set campaign_id cookie successfully.');
+      }
+    }
+    
+    if ( ads_type != undefined && ads_type != '' ) {
+      log('set cookie permission = ' + query('set_cookies', 'ads_type', options));
+      if (query('set_cookies', 'ads_type', options)) {
+        setCookie('ads_type', ads_type, options);
+        log('set ads_type cookie successfully.');
+      }
+    }
+    
     log('set cookie end');
   }
 } 
@@ -535,6 +603,15 @@ if (custom_3)   { pixelUrl += '&custom_3='+encodeUriComponent(makeString(custom_
 if (event_type.toLowerCase() == 'booking_complete') {
   if (query('get_cookies', 'dsclid')) {
     pixelUrl += '&dsclid=' + getCookieValues('dsclid');
+  }
+  if (query('get_cookies', 'ds_gclid')) {
+    pixelUrl += '&gclid=' + getCookieValues('ds_gclid');
+  }
+  if (query('get_cookies', 'campaign_id')) {
+    pixelUrl += '&campaign_id=' + getCookieValues('campaign_id');
+  }
+  if (query('get_cookies', 'ads_type')) {
+    pixelUrl += '&ads_type=' + getCookieValues('ads_type');
   }
 }
 
@@ -670,6 +747,147 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "dsclid"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "ds_gclid"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "campaign_id"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "ads_type"
                   },
                   {
                     "type": 1,
