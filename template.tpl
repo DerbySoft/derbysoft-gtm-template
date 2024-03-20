@@ -939,6 +939,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "dsclid"
+              },
+              {
+                "type": 1,
+                "string": "ads_type"
               }
             ]
           }
