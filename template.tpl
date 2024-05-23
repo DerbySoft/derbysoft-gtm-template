@@ -524,10 +524,22 @@ if (is_landing_page) {
 
   if (makeString(is_landing_page).toLowerCase() == 'true') {
     log('set cookie start, dsclid = ' + dsclid);
+    
+    var domain = '';
+    var domainParts = getUrl('host').split('.');
+    if (domainParts.length <= 2) {
+      domain = domainParts; 
+    } else if (domainParts[domainParts.length - 1].length === 2) {
+      domain = '.' + domainParts.slice(-3).join('.');
+    } else {
+      domain = '.' + domainParts.slice(-2).join('.');
+    }
+    
+    log('host = ' + getUrl('host') + ', domain = ' + domain);
 
     // set cookie 
     const options = {
-      'domain': getUrl('host'),
+      'domain': domain,
       'path': '/',
       'max-age': 30 * 24 * 60 * 60
     };
@@ -616,6 +628,7 @@ if (event_type.toLowerCase() == 'booking_complete') {
 }
 
 pixelUrl += '&gtm=yes';
+log('pixelUrl = ' + pixelUrl);
 
 if (query('send_pixel', pixelUrl)) {
   sendPixel(pixelUrl,data.gtmOnSuccess,data.gtmOnFailure);
@@ -967,6 +980,75 @@ scenarios:
       "account_id":"testv3",
       "event_type":"booking_complete",
       "is_landing_page":"FALSE",
+      "hotel_id": "testhotel",
+      "booking_id": "10000000001",
+      "check_in_date": "2020-02-01",
+      "check_out_date": "2020-02-02",
+      "stay_length": 1,
+      "total_guests": 2,
+      "rooms": 1,
+      "adults": 2,
+      "children": 0,
+      "room_type_id": "room_id",
+      "room_type_name": "room_name",
+      "rate_plan_id": "rate_id",
+      "rate_plan_name": "rate_name",
+      "price_base": 200,
+      "price_tax_fees": 20,
+      "price_total": 220,
+      "price_currency": "USD",
+      "custom_1": "abc",
+      "gtm":"yes"
+    };
+
+    // Call runCode to run the template's code.
+    runCode(mockData);
+
+    // Verify that the tag finished successfully.
+    assertApi('sendPixel').wasCalled();
+- name: booking landing has domain
+  code: |-
+    const mockData = {
+      "pixel_id":"10001",
+      "domain_value":"google.com",
+      "account_id":"testv3",
+      "event_type":"booking_complete",
+      "is_landing_page":"TRUE",
+      "hotel_id": "testhotel",
+      "booking_id": "10000000001",
+      "check_in_date": "2020-02-01",
+      "check_out_date": "2020-02-02",
+      "stay_length": 1,
+      "total_guests": 2,
+      "rooms": 1,
+      "adults": 2,
+      "children": 0,
+      "room_type_id": "room_id",
+      "room_type_name": "room_name",
+      "rate_plan_id": "rate_id",
+      "rate_plan_name": "rate_name",
+      "price_base": 200,
+      "price_tax_fees": 20,
+      "price_total": 220,
+      "price_currency": "USD",
+      "custom_1": "abc",
+      "dsclid":"1234567",
+      "gtm":"yes"
+    };
+
+    // Call runCode to run the template's code.
+    runCode(mockData);
+
+    // Verify that the tag finished successfully.
+    assertApi('sendPixel').wasCalled();
+- name: booking landing not domain
+  code: |-
+    const mockData = {
+      "pixel_id":"10001",
+      "domain_value":"",
+      "account_id":"testv3",
+      "event_type":"booking_complete",
+      "is_landing_page":"TRUE",
       "hotel_id": "testhotel",
       "booking_id": "10000000001",
       "check_in_date": "2020-02-01",
