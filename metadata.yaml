@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 820c9a123ebbbffbe8094f733a79f33726bfcda4
+    changeNotes: make the tag can work if the second-level domain  is the same
   - sha: 387a8055d8e16e484e4bd6e4daebfab888d0ace5
     changeNotes: fix cookie permission
   - sha: 6472b149df8283269043a0c3bdb7998a247c3ae7
