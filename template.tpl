@@ -528,7 +528,7 @@ if (is_landing_page) {
     var domain = '';
     var domainParts = getUrl('host').split('.');
     if (domainParts.length <= 2) {
-      domain = domainParts; 
+      domain = domainParts.join('.'); 
     } else if (domainParts[domainParts.length - 1].length === 2) {
       domain = '.' + domainParts.slice(-3).join('.');
     } else {
