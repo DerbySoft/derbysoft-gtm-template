@@ -474,6 +474,7 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const log = require('logToConsole');
 const encodeUriComponent = require('encodeUriComponent');
 const makeString = require('makeString');
+const makeInteger = require('makeInteger');
 const sendPixel = require('sendPixel');
 const query = require('queryPermission');
 const getUrl = require('getUrl');
@@ -555,7 +556,7 @@ if (is_landing_page) {
       log('set cookie permission = ' + query('set_cookies', 'ds_gclid', options));
       if (query('set_cookies', 'ds_gclid', options)) {
         setCookie('ds_gclid', gclid, options);
-        log('set ds_gclid cookie successfully.');
+        log('set ds_gclid cookie successfully, from cookie value = ' + getCookieValues('ds_gclid'));
       }
     }
     
@@ -612,19 +613,57 @@ if (custom_1)   { pixelUrl += '&custom_1='+encodeUriComponent(makeString(custom_
 if (custom_2)   { pixelUrl += '&custom_2='+encodeUriComponent(makeString(custom_2)); }
 if (custom_3)   { pixelUrl += '&custom_3='+encodeUriComponent(makeString(custom_3)); }
 
+log('event_type.toLowerCase() = ' + event_type.toLowerCase());
+var isDebugGclid = false;
 if (event_type.toLowerCase() == 'booking_complete') {
   if (query('get_cookies', 'dsclid')) {
     pixelUrl += '&dsclid=' + getCookieValues('dsclid');
   }
+  
   if (query('get_cookies', 'ds_gclid')) {
-    pixelUrl += '&gclid=' + getCookieValues('ds_gclid');
+    var dsGclid = getCookieValues('ds_gclid').toString();
+    log('dsGclid = ' + dsGclid);
+    pixelUrl += '&gclid=' + dsGclid;
+    
+    log('dsGclid.length = ' + dsGclid.length);
+    if (dsGclid.length == 19) {
+      for(var i = 0; i < dsGclid.length; i++) {
+        if (i == 0) {
+          if (dsGclid[0] != '-') {
+            log('index = ' + i);
+            break;
+          }
+          isDebugGclid = true;
+          continue;
+        }
+        
+        if (makeInteger(dsGclid[i]) >= 0 && makeInteger(dsGclid[i]) <= 9) {
+          isDebugGclid = true;
+        } else {
+          log('index = ' + i);
+          isDebugGclid = false;
+          break;
+        }
+      }
+    }
+    log('isDebugGclid = ' + isDebugGclid);
   }
+  
   if (query('get_cookies', 'campaign_id')) {
     pixelUrl += '&campaign_id=' + getCookieValues('campaign_id');
   }
   if (query('get_cookies', 'ads_type')) {
     pixelUrl += '&ads_type=' + getCookieValues('ads_type');
   }
+}
+
+if(isDebugGclid) {
+  pixelUrl = 'https://click-api.derbysoftsec.com/dplatform-cloud-gateway/click-hotel-hub/v1/click/hotel/tracking/validation/callback';
+  pixelUrl += '?account_id=' + encodeUriComponent(makeString(account_id));
+  pixelUrl += '&hotel_id='+ encodeUriComponent(makeString(hotel_id));
+  pixelUrl += '&booking_id=' + encodeUriComponent(makeString(booking_id));
+  pixelUrl += '&ads_type=' + getCookieValues('ads_type');
+  pixelUrl += '&gclid=' + getCookieValues('ds_gclid');
 }
 
 pixelUrl += '&gtm=yes';
@@ -956,6 +995,14 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "ads_type"
+              },
+              {
+                "type": 1,
+                "string": "ds_gclid"
+              },
+              {
+                "type": 1,
+                "string": "campaign_id"
               }
             ]
           }
@@ -979,7 +1026,7 @@ scenarios:
       "pixel_id":"10001",
       "account_id":"testv3",
       "event_type":"booking_complete",
-      "is_landing_page":"FALSE",
+      "is_landing_page":"TRUE",
       "hotel_id": "testhotel",
       "booking_id": "10000000001",
       "check_in_date": "2020-02-01",
@@ -998,6 +1045,8 @@ scenarios:
       "price_total": 220,
       "price_currency": "USD",
       "custom_1": "abc",
+      "gclid": "-123456789012345678",
+      "ads_type":"ppc",
       "gtm":"yes"
     };
 
