@@ -25,7 +25,6 @@ ___INFO___
   ]
 }
 
-
 ___TEMPLATE_PARAMETERS___
 
 [
@@ -465,6 +464,19 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
+  },
+  {
+    "type": "TEXT",
+    "name": "channel_campaign_id",
+    "displayName": "Channel Campaign ID",
+    "simpleValueType": true,
+    "enablingConditions": [
+      {
+        "paramName": "is_landing_page",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
   }
 ]
 
@@ -513,6 +525,7 @@ const custom_3 = data.custom_3;
 const dsclid = data.dsclid;
 const gclid = data.gclid;
 const campaign_id = data.campaign_id;
+const channel_campaign_id = data.channel_campaign_id;
 const ads_type = data.ads_type;
 
 
@@ -545,15 +558,15 @@ if (is_landing_page) {
       'max-age': 30 * 24 * 60 * 60
     };
     if ( dsclid != undefined && dsclid != '' ) {
-      log('set cookie permission = ' + query('set_cookies', 'dsclid', options));
+      log('set dsclid cookie permission = ' + query('set_cookies', 'dsclid', options));
       if (query('set_cookies', 'dsclid', options)) {
         setCookie('dsclid', dsclid, options);
-        log('set dsclid cookie successfully.');
+        log('set dsclid cookie successfully, value = ' + dsclid + ', from cookie value = ' + getCookieValues('dsclid'));
       }
     }
     
     if ( gclid != undefined && gclid != '' ) {
-      log('set cookie permission = ' + query('set_cookies', 'ds_gclid', options));
+      log('set gclid cookie permission = ' + query('set_cookies', 'ds_gclid', options));
       if (query('set_cookies', 'ds_gclid', options)) {
         setCookie('ds_gclid', gclid, options);
         log('set ds_gclid cookie successfully, from cookie value = ' + getCookieValues('ds_gclid'));
@@ -561,18 +574,26 @@ if (is_landing_page) {
     }
     
     if ( campaign_id != undefined && campaign_id != '' ) {
-      log('set cookie permission = ' + query('set_cookies', 'campaign_id', options));
+      log('set campaign_id cookie permission = ' + query('set_cookies', 'campaign_id', options));
       if (query('set_cookies', 'campaign_id', options)) {
         setCookie('campaign_id', campaign_id, options);
-        log('set campaign_id cookie successfully.');
+        log('set campaign_id cookie successfully, value = ' + campaign_id + ', from cookie value = ' + getCookieValues('campaign_id'));
+      }
+    }
+
+    if ( channel_campaign_id != undefined && channel_campaign_id != '' ) {
+      log('set channel_campaign_id cookie permission = ' + query('set_cookies', 'channel_campaign_id', options));
+      if (query('set_cookies', 'channel_campaign_id', options)) {
+        setCookie('channel_campaign_id', channel_campaign_id, options);
+        log('set channel_campaign_id cookie successfully, value = ' + channel_campaign_id + ', from cookie value = ' + getCookieValues('channel_campaign_id'));
       }
     }
     
     if ( ads_type != undefined && ads_type != '' ) {
-      log('set cookie permission = ' + query('set_cookies', 'ads_type', options));
+      log('set ads_type cookie permission = ' + query('set_cookies', 'ads_type', options));
       if (query('set_cookies', 'ads_type', options)) {
         setCookie('ads_type', ads_type, options);
-        log('set ads_type cookie successfully.');
+        log('set ads_type cookie successfully, value = ' + ads_type + ', from cookie value = ' + getCookieValues('ads_type'));
       }
     }
     
@@ -651,6 +672,9 @@ if (event_type.toLowerCase() == 'booking_complete') {
   
   if (query('get_cookies', 'campaign_id')) {
     pixelUrl += '&campaign_id=' + getCookieValues('campaign_id');
+  }
+  if (query('get_cookies', 'channel_campaign_id')) {
+    pixelUrl += '&channel_campaign_id=' + getCookieValues('channel_campaign_id');
   }
   if (query('get_cookies', 'ads_type')) {
     pixelUrl += '&ads_type=' + getCookieValues('ads_type');
@@ -958,6 +982,53 @@ ___WEB_PERMISSIONS___
                     "string": "any"
                   }
                 ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "channel_campaign_id"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
               }
             ]
           }
@@ -1003,6 +1074,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "campaign_id"
+              },
+              {
+                "type": 1,
+                "string": "channel_campaign_id"
               }
             ]
           }
