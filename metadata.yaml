@@ -2,6 +2,8 @@ homepage: "https://www.derbysoft.com/",
 documentation: "https://github.com/derbysoft/derbysoft-gtm-template",
 versions:
   # Latest version
+  - sha: 324ee541add6a4d0ca523d6b69b5bde6d267c687
+    changeNotes: add new parameter channel_campaign_id
   - sha: 1ed87bc7d818c28ea5cbacf7480699fc45abee7c
     changeNotes: add testing mode
   - sha: 2cfdcd0b8e25c57d8502db193e49a93bcced9a2b
